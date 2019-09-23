@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'models/transaction.dart';
+
 import 'package:intl/intl.dart';
+import 'package:personal_budget/widgets/user_input.dart';
+import './widgets/user_transaction.dart';
+import './widgets/transiction_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,26 +18,11 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transaction=[
-    Transaction(
-        id: 't1',
-        title: 'New Shoes',
-        amount: 69.66,
-        dateTime: DateTime.now()),
-    Transaction(
-        id: 't2',
-        title: 'Weekly Groceries',
-        amount: 125.66,
-        dateTime: DateTime.now()),
 
-
-
-  ];
 
 //  String titleInput;
 //  String amountInput;
-  final titleCOntroller=TextEditingController();
-  final amountController=TextEditingController();
+
 
 
 
@@ -44,124 +32,32 @@ class MyHomePage extends StatelessWidget {
       appBar:AppBar(
         title: Text('Personal Budget'),
       ),
-      body: Column(
+      body: Container(
+        height: 500,
+        child: SingleChildScrollView(
+          child: Column(
 //        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
 
-        children: <Widget>[
-        Container(
-
-          width: double.infinity,
-          child: Card(
-            color: Colors.blue,
-            child: Text('Chart'),
-            elevation: 5,
-          ),
-        ),
-
-          Card(
-            elevation: 5,
-            
-            child: Container(
-              
-              padding: EdgeInsets.all(10),
-              
-              
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
+              Container(
 
-                TextField(decoration: InputDecoration(
-                  labelText: 'Title'
+                width: double.infinity,
+                child: Card(
+                  color: Colors.blue,
+                  child: Text('Chart'),
+                  elevation: 5,
                 ),
+              ),
 
-               controller: titleCOntroller,
-
-
-//                onChanged: (value){
-//                  titleInput=value;
-//                },
-                ),
-                TextField(decoration: InputDecoration(
-                  labelText: 'Amount'
-                ),
-                controller: amountController,
-
-//                onChanged: (val){
-//                  amountInput=val;
-//                },
-                ),
-
-                FlatButton(child: Text(
-                  'Add Transaction',
-                ),
-                textColor: Colors.purple,
-                onPressed: (){
-
-
-                   print(titleCOntroller.text);
-                   print (amountController.text);
+               UserTransaction()
 
 
 
-                },)
+            ],),
+        ),
+      ),
 
-              ],
-          ),
-            ),),
-
-
-       Column(children: transaction.map((tx){
-         return Card(child:
-             Row(children: <Widget>[
-               Container(
-                 margin: EdgeInsets.symmetric(
-                   vertical: 10,
-                   horizontal: 15,
-                 ),
-
-                 decoration: BoxDecoration(
-                   border: Border.all(color: Colors.purple,width: 2)
-                 ),
-                 padding: EdgeInsets.all(10),
-
-                 child:
-               Text(
-                 '\$${tx.amount}',
-                 style: TextStyle(fontWeight: FontWeight.bold,
-                   fontSize: 20,
-                   color: Colors.purple
-
-                 ),
-               ),),
-
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
-
-                   children: <Widget>[
-                   Text(tx.title,
-                   style: TextStyle(fontSize: 16,
-                   fontWeight: FontWeight.bold),),
-
-
-                 Text( DateFormat.yMMMd().format(tx.dateTime),
-                 style: TextStyle(
-                   color: Colors.grey
-                 ),)
-
-                 ],),
-
-
-
-
-             ],)
-
-         );
-       }).toList(),)
-
-      ],),
 
     );
   }
